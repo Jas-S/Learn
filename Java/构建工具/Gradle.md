@@ -53,4 +53,86 @@ task sayDoLast {
 
 每个task都是org.gradle.api.DefaultTask类型，在构建脚本中我们可以直接使用属性名使用该类中的相关属性，在底层Groovy会为我们调用相关的getter和setter方法去访问相关属性，这里先简单使用doFirst或doLast方法试试，后续会对task做详细讲解。  
 
+# Gradle构建Web项目
+## 创建Gradle项目
+1. 手动创建
+   1. 执行 ```gradle init``` 创建项目
+2. 快速搭建（https://start.sping.io）
+   1. Gradle版的SpringBoot
+   2. Maven版的SpringBoot
+
+项目结构解析
+```
+|-build.gradle                         ①
+|-gradlew                              ②
+|-grablew.bat                          ③
+|-settings.gradle                      ④
+|-gradle                               ⑤
+|  └-wrapper
+|     |- gradle-wrapper.jar
+|     |- gradle-wrapper.properties
+└-src                                  ⑥
+  |-main
+  └-test
+```
+1. 项目自动编译时要读取的配置文件。比如指定项目的依赖包等。build.gradle有两种，一个是根目录里的全局配置，一个是在各个模块目录里面。全局的配置中主要是声明仓库源，gradle的版本号说明等。
+2. linux下的gradle执行脚本，可用来执行gradle指令，如：./gradlew build
+3. Windows下的gradle执行脚本，可用来执行gradle指令。
+4. 包含必要的一些设置，例如，任务或项目之间的依赖关系等。
+5. 包含wrapper文件夹及2个子文件，作用是配置gradle执行环境，以便在没有安装gradle的机器上也可以执行gradle指令。
+6. 项目源码
+
+build.gradle基础结构
+```Groovy
+/********* 普通程序gradle init 初始化 *********/
+plugins {
+    // Apply the java plugins to add support for Java
+    id 'java'
+    ...
+}
+repositories {
+    // Use jcenter for resolving dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+    jcenter()
+}
+dependencies {
+    implementation 'com.google.guava:guava:27.1-jre'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.4.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.4.2'
+}
+application {
+    mainClassName = 'first.init.App'
+}
+test {
+    useJunitPlatform()
+}
+
+/********* SpringBoot 项目基础配置 ***********/
+plugins {
+    id 'org.springframework.boot' version '2.6.4'
+    id 'io.sping.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'me.jas.learnGradle'
+version = '1.0.0'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJunitPlatform()
+}
+```
+>mavenCentral()和jCenter()区别  
+>jCenter相比mavenCentral构件更多，性能也更好。但有些构件仅存在于mavenCentral仓库中。
+
+
 
