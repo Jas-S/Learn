@@ -14,8 +14,9 @@
 环境：Windows，Java，Mac平台推荐使用Homebrew包管理器进行安装。
 版本：
 * binary-only：只有可执行文件
-* complete：除了可执行文件还包含源码及说明文档
-配置（Windows）
+* complete：除了可执行文件还包含源码及说明文档  
+
+配置（Windows）  
 * 新建GRADLE_HOME环境变量，指向gradle根目录。
 * 在path中加入项%GRADLE_HOME%¥bin, 类似于JDK或Maven的配置。
 * 打开CMD，执行gradle -v，输出版本信息则安装成功。
@@ -23,3 +24,4 @@
 > #### 注意  
 > 这里只是让大家能全局享受gradle，于mvn或java -jar等类似，实际工作中由于个项目版本不一，并不会使用本地配置的gradle，而是采用wrapper的方式进行配置。
 
+# Gradle集成IDE
