@@ -19,5 +19,6 @@ Git Flow的分支类型：
 |---------|----|--------------|
 |support分支|维护分支|support/1.0.0 |
 
-
+实验环境：
+https://k.swd.cc/learnGitBranching-ja/?NODEMO
 
