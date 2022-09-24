@@ -1,3 +1,25 @@
+- [性能分析工具的使用](#性能分析工具的使用)
+  - [查看SQL执行成本：SHOW PROFILE](#查看sql执行成本show-profile)
+    - [show profile的常用查询参数：](#show-profile的常用查询参数)
+    - [日常开发需要注意的结论：](#日常开发需要注意的结论)
+  - [分析查询语句：EXPLAIN](#分析查询语句explain)
+    - [EXPLAIN各列作用](#explain各列作用)
+      - [1.table](#1table)
+      - [2.id](#2id)
+      - [3.select_type](#3select_type)
+      - [4.partitions(可略)](#4partitions可略)
+      - [5.type☆](#5type)
+      - [6.possible_key和key](#6possible_key和key)
+      - [7.key_len☆](#7key_len)
+      - [8.ref](#8ref)
+      - [9.rows☆](#9rows)
+      - [10.filtered](#10filtered)
+      - [11.Extra☆](#11extra)
+      - [12.小结](#12小结)
+
+
+  
+    
 # 性能分析工具的使用
 通过使用`EXPLAIN SHOW PROFILING`确认问题点。  
 * SQL等待时间长
@@ -80,13 +102,11 @@ SHOW PROFILE命令将被弃用，之后我们可以从information_schema中的pr
 * <font color='blue'>const</font>：根据`主键`或者`唯一`二级索引列与常数进行`等值匹配`时。
 * <font color='blue'>eq_ref</font>：连接查询中，被驱动表是通过`主键`或者`唯一`二级索引列`等值匹配`时。
 * <font color='blue'>ref</font>：通过`普通的二级索引列`与`常量`进行`等值匹配`时。
----
 * <font color='orange'>fulltext</font>
 * <font color='orange'>ref_or_null</font>：当普通二级索引列的值可以为NULL时。
 * <font color='orange'>index_merge</font>
 * <font color='orange'>unique_subquery</font>
 * <font color='orange'>index_subquery</font>
----
 * <font color='red'>range</font>：范围条件
 * <font color='red'>index</font>：可以使用索引覆盖，但需要扫描`全部的索引记录`时。
 * <font color='red'>ALL</font>：全表扫描
