@@ -22,4 +22,28 @@ mysql > show variables like 'profiling';
 mysql > set profiling = 'ON';
 ```
 
+开启后即可执行
+```sql
+mysql > show profiles;
+mysql > show profile [cpu, block io] [for query n];
+ ```
+### show profile的常用查询参数：
+* ALL: 显示所有的开销信息。
+* BLOCK IO：显示块儿IO开销。
+* CONTEXT SWITCHES：上下文切换开销。
+* CPU：CPU开销信息。
+* IPC：发送及接受开销信息。
+* MEMORY：内存开销信息。
+* PAGE FAULTS：页面错误开销信息。
+* SOURCE：显示和Source_function, Source_file, Source_line相关的开销信息。
 
+### 日常开发需要注意的结论：
+* converting HEAP to MyISAM：查询结果太大，内存不够，数据往磁盘上搬了。
+* Creating tmp table：创建临时表。先拷贝数据到临时表，用完后再删除临时表。
+* Copying to tmp table on disk：把内存中临时表复制到磁盘上，警惕！
+* locked。  
+  
+如果在show profile诊断结果中出现了以上4条结果中的任何一条，则sql语句需要优化。  
+
+**注意：**
+SHOW PROFILE命令将被弃用，之后我们可以从information_schema中的profiling数据表进行查看。
