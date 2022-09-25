@@ -114,7 +114,7 @@ SHOW PROFILE命令将被弃用，之后我们可以从information_schema中的pr
 >SQL性能优化的目标：至少要达到range级别，理想是ref级别，最好是const级别。
 
 #### 6.possible_key和key
-可能用到的键值和实际使用的键值。
+可能用到的索引和实际使用的索引。
 #### 7.key_len☆
 #### 8.ref
 #### 9.rows☆
